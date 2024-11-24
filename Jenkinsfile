@@ -22,7 +22,7 @@ pipeline {
         stage('Build') {
             steps {                
                 script {
-                    sh 'docker compose -f ocker-compose.yaml -f docker-compose-dev.yaml build'
+                    sh 'docker compose -f docker-compose.yaml -f docker-compose-dev.yaml build'
                 }
             }
         }
