@@ -28,17 +28,17 @@ pipeline {
         }
 
 
-        stage('Archive Artifacts') {
-            steps {
-                script {
-                    // Create artifact directory if it doesn't exist
-                    sh "mkdir -p ${ARTIFACT_DIR}"
-                    // Copy artifacts from the container to the host
-                    sh 'docker cp $(docker compose -f docker-compose.yaml -f docker-compose-dev.yaml ps -q app):/app/ ${ARTIFACT_DIR}'
-                }
-                archiveArtifacts artifacts: "${ARTIFACT_DIR}/app/*.jar", allowEmptyArchive: true
-            }
-        }
+        // stage('Archive Artifacts') {
+        //     steps {
+        //         script {
+        //             // Create artifact directory if it doesn't exist
+        //             sh "mkdir -p ${ARTIFACT_DIR}"
+        //             // Copy artifacts from the container to the host
+        //             sh 'docker cp $(docker compose -f docker-compose.yaml -f docker-compose-dev.yaml ps -q app):/app/ ${ARTIFACT_DIR}'
+        //         }
+        //         archiveArtifacts artifacts: "${ARTIFACT_DIR}/app/*.jar", allowEmptyArchive: true
+        //     }
+        // }
 
         stage('Push Docker Images') {
             steps {
