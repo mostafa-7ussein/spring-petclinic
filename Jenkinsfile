@@ -55,25 +55,16 @@ pipeline {
             }
         }
     }
-
-    // post {
-    //     success {
-    //         mail subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-    //                  body: "Good news! Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' succeeded.",
-    //                  to: "${RECIPIENT}"
-    //     }
-    //     failure {
-    //         mail subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-    //                  body: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' failed. Please check the logs for details.",
-    //                  to: "${RECIPIENT}"
-    //     }
-    //     cleanup {
-    //         script {
-    //             // List and remove containers, networks, images, and volumes specific to the project
-    //             sh 'docker compose -f spring-petclinic/docker-compose.yml -f spring-petclinic/docker-compose-dev.yml down'
-    //         }
-    //         // Clean up workspace and project-specific Docker containers, networks, images, and volumes
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        success {
+            script {
+                slackSend(channel: '#devops', color: '#00FF00', message: "Succeeded  ${env.JOB_NAME} - Build Number: ${env.BUILD_NUMBER} succeeded!")
+            }
+        }
+        failure {
+            script {
+                slackSend(channel: '#devops', message: "Pipeline ${env.JOB_NAME} - Build Number: ${env.BUILD_NUMBER} failed!")
+            }
+        }
     }
+}
